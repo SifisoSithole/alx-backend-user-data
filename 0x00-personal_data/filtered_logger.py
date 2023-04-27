@@ -97,11 +97,11 @@ def main():
     engine.execute('SELECT * FROM users;')
     users = engine.fetchall()
     for user in users:
-        message = f"name={row[0]}; " + \
-                  f"email={row[1]}; " + \
-                  f"phone={row[2]}; " + \
-                  f"ssn={row[3]}; " + \
-                  f"password={row[4]};"
+        message = f"name={user[0]}; " + \
+                  f"email={user[1]}; " + \
+                  f"phone={user[2]}; " + \
+                  f"ssn={user[3]}; " + \
+                  f"password={user[4]};"
         logger.info(message)
 
 
