@@ -5,6 +5,8 @@ This module obfuscate sensitive information
 import logging
 import re
 from typing import List, Tuple
+from os import getenv
+import mysql.connector
 
 PII_FIELDS: Tuple[str] = ('name', 'email', 'phone', 'ssn', 'password')
 
@@ -46,6 +48,22 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(RedactingFormatter(PII_FIELDS))
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    returns a connector to the database
+    """
+    username = getenv('PERSONAL_DATA_DB_USERNAME', default='root')
+    password = getenv('PERSONAL_DATA_DB_PASSWORD', default='')
+    host = getenv('PERSONAL_DATA_DB_HOST', default='localhost')
+    database = getenv('PERSONAL_DATA_DB_NAME')
+    return mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=database
+    )
 
 
 class RedactingFormatter(logging.Formatter):
