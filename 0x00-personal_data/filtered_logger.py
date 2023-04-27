@@ -85,3 +85,25 @@ class RedactingFormatter(logging.Formatter):
         """
         return filter_datum(self.fields, self.REDACTION,
                             super().format(record), self.SEPARATOR)
+
+
+def main():
+    """
+    Obtain a database connection using get_db and retrieve all rows
+    in the users table and display each row under a filtered format like this
+    """
+    logger = get_logger()
+    engine = get_db().cursor()
+    engine.execute('SELECT * FROM users;')
+    users = engine.fetchall()
+    for user in users:
+        message = f"name={row[0]}; " + \
+                  f"email={row[1]}; " + \
+                  f"phone={row[2]}; " + \
+                  f"ssn={row[3]}; " + \
+                  f"password={row[4]};"
+        logger.info(message)
+
+
+if __name__ == '__main__':
+    main()
