@@ -32,3 +32,11 @@ def test_unauthorized():
     raise 401 error
     """
     abort(401)
+
+
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def test_forbidden():
+    """
+    raise 403 error
+    """
+    abort(403)

@@ -7,7 +7,7 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import Unauthorized, Forbidden
 
 
 app = Flask(__name__)
@@ -28,6 +28,14 @@ def unauthorized(error: Unauthorized) -> str:
     unauthorized acccess
     """
     return jsonify({"error": "Unauthorized"}), 401
+
+
+@app.errorhandler(Forbidden)
+def forbidden(error: Forbidden):
+    """
+    forbidenn access
+    """
+    return jsonify({"error": "Forbidden"}), 403
 
 
 if __name__ == "__main__":
