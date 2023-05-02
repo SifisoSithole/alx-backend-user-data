@@ -3,6 +3,8 @@
 Basic Authorization module
 """
 from api.v1.auth.auth import Auth
+from base64 import b64decode
+from codecs import decode
 
 
 class BasicAuth(Auth):
@@ -30,3 +32,21 @@ class BasicAuth(Auth):
         if authorization_header[0] != 'Basic':
             return None
         return authorization_header[1]
+
+    def decode_base64_authorization_header(self,
+                                           base64_authorization_header: str
+                                           ) -> str:
+        """
+        decode base64 string to as a UTF8 string
+        """
+        if not base64_authorization_header:
+            return
+
+        if type(base64_authorization_header) is not str:
+            return
+
+        try:
+            decoded_bytes = b64decode(base64_authorization_header)
+            return decode(decoded_bytes, 'utf-8')
+        except Exception:
+            return
