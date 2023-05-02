@@ -23,8 +23,8 @@ class Auth:
 
         Arguments
         ---------
-            path (str):
-            excluded_paths (List[str]):
+            path (str): path requested
+            excluded_paths (List[str]): excluded paths
 
         Return
         ------
@@ -56,7 +56,16 @@ class Auth:
         -------
             (str):
         """
-        return None
+
+        if request is None:
+            return None
+
+        authorization = request.headers.get('Authorization')
+
+        if authorization is None:
+            return None
+
+        return authorization
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
