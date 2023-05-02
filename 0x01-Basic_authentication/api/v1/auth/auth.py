@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Basic Authorization module
+Authorization module
 """
 from flask import request
 from typing import List, TypeVar
