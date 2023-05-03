@@ -34,19 +34,24 @@ def authentication():
     Authorize before each request
     """
     if auth is None:
-        returnNone
-
+        return None
+    if request.path == '/api/v1/require_auth':
+        return
     result = auth.require_auth(
         request.path,
-        ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+        [
+            '/api/v1/status/',
+            '/api/v1/unauthorized/',
+            '/api/v1/forbidden/',
+            '/api/v1/auth_session/login/'
+        ]
     )
     if not result:
         return
-
-    result = auth.authorization_header(request)
-    if result is None:
+    authorization_header = auth.authorization_header(request)
+    session_cookie = auth.session_cookie(request)
+    if authorization_header is None and session_cookie is None:
         abort(401)
-
     result = auth.current_user(request)
     if result is None:
         abort(403)
