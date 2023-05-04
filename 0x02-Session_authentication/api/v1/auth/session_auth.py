@@ -11,12 +11,7 @@ class SessionAuth(Auth):
     """
     Session Authentication
     """
-
-    def __init__(self):
-        """
-        initialize class
-        """
-        self.user_id_by_session_id = {}
+    user_id_by_session_id = {}
 
     def create_session(self, user_id: str = None) -> str:
         """
@@ -34,7 +29,8 @@ class SessionAuth(Auth):
         """
         if not session_id or type(session_id) is not str:
             return
-        return self.user_id_by_session_id.get(session_id)
+        session_id = self.user_id_by_session_id.get(session_id)
+        return session_id
 
     def current_user(self, request=None):
         """
@@ -44,4 +40,5 @@ class SessionAuth(Auth):
             return
         session_id = self.session_cookie(request)
         user_id = self.user_id_for_session_id(session_id)
-        return User.get(user_id)
+        user = User.get(user_id)
+        return user
