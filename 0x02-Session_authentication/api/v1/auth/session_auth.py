@@ -29,8 +29,7 @@ class SessionAuth(Auth):
         """
         if not session_id or type(session_id) is not str:
             return
-        session_id = self.user_id_by_session_id.get(session_id)
-        return session_id
+        return self.user_id_by_session_id.get(session_id)
 
     def current_user(self, request=None):
         """
@@ -42,3 +41,19 @@ class SessionAuth(Auth):
         user_id = self.user_id_for_session_id(session_id)
         user = User.get(user_id)
         return user
+
+    def destroy_session(self, request=None):
+        """
+        deletes the user session / logout
+        """
+        if not request:
+            return False
+        session_id = self.session_cookie(request)
+        if not session_id:
+            return False
+        user_id = self.user_id_for_session_id(session_id)
+        if not user_id:
+            return False
+        del self.user_id_by_session_id[session_id]
+        return True
+        
