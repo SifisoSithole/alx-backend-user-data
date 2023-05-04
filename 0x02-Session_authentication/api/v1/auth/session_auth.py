@@ -34,7 +34,6 @@ class SessionAuth(Auth):
         """
         if not session_id or type(session_id) is not str:
             return
-        print(self.user_id_by_session_id)
         return self.user_id_by_session_id.get(session_id)
 
     def current_user(self, request=None):
