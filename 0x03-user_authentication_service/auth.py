@@ -43,5 +43,3 @@ def _hash_password(password: str) -> str:
     hashed with bcrypt.hashpw
     """
     return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
-
-    
