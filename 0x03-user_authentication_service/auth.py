@@ -88,6 +88,20 @@ class Auth:
         self._db.update_user(user.id, reset_token=generated_id)
         return generated_id
 
+    def update_password(self, reset_token: str, password: str):
+        """
+        updates user password based reset token
+        """
+        user = self._db.find_user_by(reset_token=reset_token)
+        if not user:
+            raise ValueError
+        hashed_password = _hash_password(password)
+        self.db.update_user(
+            user.id,
+            hashed_password=hashed_password,
+            reset_token=None
+        )
+
 
 def _hash_password(password: str) -> str:
     """
