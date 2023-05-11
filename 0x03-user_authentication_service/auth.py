@@ -92,6 +92,8 @@ class Auth:
         """
         updates user password based reset token
         """
+        if type(password) is not str:
+            return
         user = self._db.find_user_by(reset_token=reset_token)
         if not user:
             raise ValueError
