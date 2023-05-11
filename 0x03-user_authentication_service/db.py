@@ -58,7 +58,10 @@ class DB:
         """
         The method will use find_user_by to locate the user to update
         """
-        user = self.find_user_by(id=user_id)
+        try:
+            user = self.find_user_by(id=user_id)
+        except NoResultFound:
+            return
         for k, v in kwargs.items():
             if not hasattr(user, k):
                 raise ValueError
