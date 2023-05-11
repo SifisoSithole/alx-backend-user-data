@@ -98,11 +98,14 @@ class Auth:
         if not user:
             raise ValueError
         hashed_password = _hash_password(password)
-        self.db.update_user(
-            user.id,
-            hashed_password=hashed_password,
-            reset_token=None
-        )
+        try:
+            self.db.update_user(
+                user.id,
+                hashed_password=hashed_password,
+                reset_token=None
+            )
+        except Exception:
+            raise ValueError
 
 
 def _hash_password(password: str) -> str:
