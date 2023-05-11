@@ -77,6 +77,7 @@ class Auth:
         except ValueError:
             return
 
+
 def _hash_password(password: str) -> str:
     """
     returnes bytes salted hash of the input password,
