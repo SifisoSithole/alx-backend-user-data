@@ -94,18 +94,16 @@ class Auth:
         """
         if type(password) is not str:
             return
-        user = self._db.find_user_by(reset_token=reset_token)
-        if not user:
-            raise ValueError
-        hashed_password = _hash_password(password)
         try:
-            self.db.update_user(
-                user.id,
-                hashed_password=hashed_password,
-                reset_token=None
-            )
+            user = self._db.find_user_by(reset_token=reset_token)
         except Exception:
             raise ValueError
+        hashed_password = _hash_password(password)
+        self.db.update_user(
+            user.id,
+            hashed_password=hashed_password,
+            reset_token=None
+        )
 
 
 def _hash_password(password: str) -> str:
