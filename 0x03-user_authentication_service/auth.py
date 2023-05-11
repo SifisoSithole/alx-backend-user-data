@@ -50,6 +50,18 @@ class Auth:
         except Exception:
             return None
 
+    def get_user_from_session_id(session_id: str) -> TypeVar('User'):
+        """
+        retreives a user using a session id
+        """
+        if not session_id:
+            return
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except NoResultFound:
+            return
+
 
 def _hash_password(password: str) -> str:
     """
