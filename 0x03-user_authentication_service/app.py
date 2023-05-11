@@ -53,7 +53,7 @@ def login():
 @app.route('/sessions', methods=['DELETE'])
 def logout():
     """
-    logout and destroy session
+    logouts out the user and destroy session
     """
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
@@ -66,7 +66,7 @@ def logout():
 @app.route('/profile', methods=['GET'])
 def profile():
     """
-    returns user profile
+    returns user profile with email
     """
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
