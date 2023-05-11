@@ -73,7 +73,7 @@ class Auth:
         except NoResultFound:
             return
         try:
-            self._db.update_user(user_id, session_id)
+            self._db.update_user(user_id, session_id=None)
         except ValueError:
             return
 
